@@ -11,7 +11,7 @@ mkdir -p build || { echo "ERROR: Could not create the build directory."; exit 1;
 cd build || { echo "ERROR: Could not enter the build directory."; exit 1; }
 
 ## Fetch the depend scripts.
-DEPEND_SCRIPTS=$(ls ../depends/*.sh | sort)
+readarray -t DEPEND_SCRIPTS < <(ls ../depend/*.sh | sort)
 
 ## Run all the depend scripts.
 for SCRIPT in ${DEPEND_SCRIPTS[@]}; do "$SCRIPT" || { echo "$SCRIPT: Failed."; exit 1; } done
@@ -26,7 +26,7 @@ else
 fi
 
 ## Fetch the build scripts.
-BUILD_SCRIPTS=$(ls ../scripts/*.sh | sort)
+readarray -t BUILD_SCRIPTS < <(ls ../scripts/*.sh | sort)
 
 ## If specific steps were requested...
 if [ "$1" ]; then
